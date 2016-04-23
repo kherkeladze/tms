@@ -7,6 +7,8 @@
 let userModel = require('../models/user');
 let response = require('./responseController');
 let helpers = require('../helpers');
+let messages = require('../lang/messages');
+let tokenController = require('../controllers/tokenController');
 
 class User {
 
@@ -21,10 +23,10 @@ class User {
         return new Promise(resolve => {
 
             newUser.save(err => {
-                if(err)
-                    resolve(response.error(helpers.mongoosePrettyErrors(err)));
-                else
-                    resolve(response.success(newUser));
+
+                if(err) resolve(response.error(helpers.mongoosePrettyErrors(err)));
+
+                resolve(response.success(newUser));
                 
             });
             
@@ -32,7 +34,23 @@ class User {
 
     }
 
-    login() {
+    static login(credentials) {
+
+        return new Promise((resolve, reject) => {
+
+            userModel.findOne({ email : credentials.email }, (err, user) => {
+
+                if(err) resolve(response.error(err));
+
+                if(user.comparePassword(credentials.password))
+
+                    resolve(tokenController.createToken(credentials.email));
+
+                else
+                    reject(response.error(messages.WRONG_CREDENTIALS));
+            });
+
+        });
 
     }
 }

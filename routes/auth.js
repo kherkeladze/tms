@@ -14,13 +14,22 @@ authRoutes.post('/register', (req, res) => {
     let result = user.register();
 
     result.then(data => res.json(data));
-    
+
 
 });
 
 authRoutes.post('/login', (req, res) => {
 
-    res.end('login');
+    let result = User.login(req.body);
+    
+    result.then(token => {
+        res.cookie('token', token);
+        res.json({status : "success"});
+
+    })
+    .catch(data => {
+            res.json(data);
+    });
     
 });
 

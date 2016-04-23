@@ -8,7 +8,7 @@ let messages = require('./lang/messages');
 let _ = require('lodash');
 
 class Helper {
-
+    
     static mongoosePrettyErrors(err){
 
         let prettyErrors = [];

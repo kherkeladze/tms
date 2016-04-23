@@ -11,10 +11,13 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
+    "install": "^0.6.1",
     "jsonwebtoken": "^5.7.0",
     "lodash": "^4.11.1",
     "mongoose": "^4.4.13",
+    "npm": "^3.8.7",
     "sanitizer": "^0.1.3"
   }
 }
