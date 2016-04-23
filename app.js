@@ -6,6 +6,7 @@
 
 let config = require('./appConfig');
 let authRoutes = require('./routes/auth');
+let userController = require('./controllers/userController');
 let express = require('express');
 let mongoose = require('mongoose');
 let bodyParser = require('body-parser');
@@ -25,9 +26,17 @@ app.use(express.static('public'));
 app.use('/auth', authRoutes);
 
 
-app.get('*', (req, res) => {
+
+
+app.get('/auth', (req, res) => {
     res.sendFile(path.join(`${__dirname}/public/generated/index.html`));
 });
+
+
+app.get('*', userController.checkAuth, (req, res) => {
+    res.sendFile(path.join(`${__dirname}/public/generated/index.html`));
+});
+
 
 
 app.listen(config.SERVER_PORT);

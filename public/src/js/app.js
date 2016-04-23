@@ -26,7 +26,7 @@ app.factory('$API', function($http) {
 });
 
 
-app.controller('authCtrl', function ($API, $scope) {
+app.controller('authCtrl', function ($API, $scope, $location) {
 
     $scope.errors = [];
     this.loginData = {};
@@ -39,8 +39,15 @@ app.controller('authCtrl', function ($API, $scope) {
 
         $API('/auth/login', this.loginData)
             .then(function (response) {
-                $scope.errors = response.errors;
-                $scope.$apply();
+
+                if(response.status == 'success')
+                    $location.path('/');
+
+                else {
+                    $scope.errors = response.errors;
+                    $scope.$apply();
+                }
+
             });
     }
 
@@ -58,6 +65,11 @@ app.controller('authCtrl', function ($API, $scope) {
 });
 
 
+app.controller('dashBoardCtrl', function () {
+
+});
+
+
 
 app.config(function($routeProvider, $locationProvider) {
 
@@ -68,5 +80,8 @@ app.config(function($routeProvider, $locationProvider) {
             templateUrl : 'generated/pages/auth.html',
             controller : 'authCtrl'
         })
-
+        .when('/', {
+            templateUrl : 'generated/pages/dashboard.html',
+            controller : 'dashBoardCtrl'
+        })
 });
