@@ -4,26 +4,55 @@
 
 var app = angular.module('tms', ['ui.bootstrap','ngRoute']);
 
-app.controller('authCtrl', function ($http) {
 
-    this.errors = [];
+app.factory('$API', function($http) {
+
+    return function (url, data) {
+
+        return new Promise(function (resolve) {
+
+            $http({
+                method : "POST",
+                url : url,
+                data : data
+            }).then(function (response) {
+                resolve(response.data);
+            });
+
+        });
+
+    };
+
+});
+
+
+app.controller('authCtrl', function ($API, $scope) {
+
+    $scope.errors = [];
     this.loginData = {};
-    var self = this;
+    this.registerData = {};
 
     this.tryLogin = function ($valid) {
-        this.errors = [];
+
 
         if(!$valid) return false;
 
-        $http({
-          method : "POST",
-          url : "/auth/login",
-          data : this.loginData
-        })
-        .then(function(response) {
-            if(response.data.status == 'error')
-                self.errors = response.data.errors;
-         });
+        $API('/auth/login', this.loginData)
+            .then(function (response) {
+                $scope.errors = response.errors;
+                $scope.$apply();
+            });
+    }
+
+    this.tryRegister = function ($valid) {
+        if(!$valid) return false;
+
+        $API('/auth/register', this.registerData)
+            .then(function(response) {
+               $scope.errors = response.errors;
+               $scope.$apply();
+            });
+
     }
 
 });

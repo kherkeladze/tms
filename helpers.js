@@ -13,24 +13,29 @@ class Helper {
 
         let prettyErrors = [];
 
-        if(err.name = "ValidationError"){
-
+        if(err.name = "ValidationError") {
             _.forOwn(err.errors, error => {
-
+                console.log('eaah');
                 if(error.properties.type == 'required')
                     prettyErrors.push(`${error.properties.path} ${messages.REQUIRED_FIELD}`);
 
-                if(error.properties.type == 'minlength')
+                else if(error.properties.type == 'minlength')
                     prettyErrors.push(`${error.properties.path}'s ${messages.MIN_LENGTH} ${error.properties.minlength}`);
 
-                if(error.properties.type == 'maxlength')
+                else if(error.properties.type == 'maxlength')
                     prettyErrors.push(`${error.properties.path}'s ${messages.MAX_LENGTH} ${error.properties.maxlength}`);
+
+                else
+                    prettyErrors.push(messages.DUPLICATE_EMAIL);
 
             });
 
         }
+        
+        if(err.code == 11000)
+            prettyErrors.push(messages.DUPLICATE_EMAIL);
 
-        return err;
+        return prettyErrors;
 
     }
 }
