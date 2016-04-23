@@ -40,14 +40,16 @@ class User {
 
             userModel.findOne({ email : credentials.email }, (err, user) => {
 
-                if(err) resolve(response.error(err));
+                if(err) return resolve(response.error(err));
+
+                if(!user) return reject(response.error([messages.USER_NOT_FOUND]));
 
                 if(user.comparePassword(credentials.password))
 
                     resolve(tokenController.createToken(credentials.email));
 
                 else
-                    reject(response.error(messages.WRONG_CREDENTIALS));
+                    reject(response.error([messages.WRONG_PASSWORD]));
             });
 
         });

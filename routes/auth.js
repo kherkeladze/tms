@@ -19,7 +19,7 @@ authRoutes.post('/register', (req, res) => {
 });
 
 authRoutes.post('/login', (req, res) => {
-
+    
     let result = User.login(req.body);
     
     result.then(token => {

@@ -8,6 +8,7 @@ module.exports = {
     MAX_LENGTH : "max length is",
     MIN_LENGTH : "min length is",
     REQUIRED_FIELD : "is required",
-    WRONG_CREDENTIALS : "wrong credentials"
+    WRONG_PASSWORD : "wrong password",
+    USER_NOT_FOUND : "User not found"
     
 };

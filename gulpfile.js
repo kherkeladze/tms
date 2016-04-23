@@ -21,5 +21,5 @@ gulp.task('scripts', function() {
 gulp.task('watcher', function () {
     gulp.watch('./public/src/index.html', ['indexFile']);
     gulp.watch('./public/src/pages/*.html', ['pages']);
-    gulp.watch('/public/src/pages/*.js', ['scripts']);
+    gulp.watch('./public/src/js/*.js', ['scripts']);
 });
