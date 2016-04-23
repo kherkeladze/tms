@@ -9,9 +9,11 @@
   "author": "a.kherkeladze",
   "license": "MIT",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
     "jsonwebtoken": "^5.7.0",
+    "lodash": "^4.11.1",
     "mongoose": "^4.4.13",
     "sanitizer": "^0.1.3"
   }
