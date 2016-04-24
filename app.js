@@ -27,16 +27,10 @@ app.use('/auth', authRoutes);
 
 
 
-
-app.get('/auth', (req, res) => {
-    res.sendFile(path.join(`${__dirname}/public/generated/index.html`));
-});
-
-
-app.get('*', userController.checkAuth, (req, res) => {
-    res.sendFile(path.join(`${__dirname}/public/generated/index.html`));
+app.get('*', (req, res) => {
+    res.sendFile(`${path.join(__dirname)}/public/generated/index.html`);
 });
 
 
 
-app.listen(config.SERVER_PORT);
+app.listen(process.env.PORT || config.SERVER_PORT);

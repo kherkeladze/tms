@@ -1,1 +1,140 @@
-<p>dashboard</p>
+<div class="row">
+
+    <div ng-controller="dashboardCtrl as dashboard" class="col-xs-8 col-xs-push-2 jumbotron" style="margin-top: 10%">
+
+
+        <uib-tabset active="activeJustified" justified="true">
+            <uib-tab index="0" heading="Tasks">
+
+                <div ng-controller="taskListCtrl as tasks" class="list-group" style="margin-top: 5px">
+
+                    <a href="#" class="list-group-item">Dapibus ac facilisis in <span
+                            class="label label-success pull-right">done</span></a>
+                    <a href="#" class="list-group-item">Morbi leo risus <span class="label label-primary pull-right">progress</span></a>
+                    <a href="#" class="list-group-item">Porta ac consectetur ac <span
+                            class="label label-default pull-right">not started</span></a>
+                    <a href="#" class="list-group-item">Vestibulum at eros <span class="label label-default pull-right">not started</span></a>
+                </div>
+
+
+            </uib-tab>
+
+            <uib-tab index="1" heading="Add new">
+                <div ng-controller="taskManagerCtrl as taskManager">
+
+                    <form style="margin-top: 10px">
+                        <div class="form-group">
+                            <label>Title:</label>
+                            <input ng-model="taskManager.taskModel.title" type="text" class="form-control" placeholder="title">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description:</label>
+                            <input ng-model="taskManager.taskModel.description" type="text" class="form-control" placeholder="description">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sel1">Status:</label>
+                            <select ng-model="taskManager.taskModel.status" class="form-control" id="sel1">
+                                <option value="1">Not started</option>
+                                <option value="2">In progress</option>
+                                <option value="3">Testing</option>
+                                <option value="4">Accepted</option>
+                                <option value="5">Rejected</option>
+                                <option value="6">Closed</option>
+                            </select>
+                        </div>
+
+                        <div ng-controller="datepickerCtrl as datepicker" class="form-group row">
+
+                            <div class="col-xs-6">
+
+                                <label for="sel1">start date:</label>
+                                <p class="input-group">
+                                    <input type="text" class="form-control" uib-datepicker-popup="{{datepicker.format}}" ng-model="taskManager.taskModel.startDate"
+                                           is-open="datepicker.popup2.opened" datepicker-options="dateOptions" ng-required="true"
+                                           close-text="Close" alt-input-formats="altInputFormats"/>
+                              <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="datepicker.open2()"><i
+                                        class="glyphicon glyphicon-calendar"></i></button>
+                              </span>
+                                </p>
+
+                            </div>
+
+                            <div class="col-xs-6">
+
+                                <label for="sel1">Due date:</label>
+                                <p class="input-group">
+                                    <input type="text" class="form-control" uib-datepicker-popup="{{datepicker.format}}" ng-model="taskManager.taskModel.dueDate"
+                                           is-open="datepicker.popup1.opened" datepicker-options="dateOptions" ng-required="true"
+                                           close-text="Close" alt-input-formats="altInputFormats"/>
+                              <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="datepicker.open1()"><i
+                                        class="glyphicon glyphicon-calendar"></i></button>
+                              </span>
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="sel1">Add users:</label>
+
+                            <div class="well well-lg">
+
+                                <a ng-click="taskManager.addUserBlock()" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+
+                                <div class="row" ng-repeat="userBlock in taskManager.userBlocks">
+
+                                    <div class="col-xs-5">
+
+                                        <div class="form-group">
+                                            <label>Select user:</label>
+                                            <select class="form-control">
+                                                <option disabled selected>None</option>
+                                                <option value="2">In progress</option>
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-xs-5">
+
+                                        <div class="form-group">
+                                            <label>Select role:</label>
+                                            <select class="form-control">
+                                                <option value="1" disabled selected>Not started</option>
+                                                <option value="2">In progress</option>
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-xs-2">
+                                        <label>&nbsp;</label>
+                                            <a ng-click="taskManager.removeUserBlock($index)" class="btn btn-danger" href="">Remove</a>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+                        <button ng-click="taskManager.createTask()" class="btn btn-success">Submit</button>
+
+
+                    </form>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+
+    </div>
+
+</div>

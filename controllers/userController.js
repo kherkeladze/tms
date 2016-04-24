@@ -56,14 +56,8 @@ class User {
 
     }
 
-    static checkAuth(req, res, next) {
-
-        let token = req.cookies.token;
-
-        if(tokenController.isValidToken(token))
-            next();
-        else
-            return res.redirect('/auth');
+    static checkAuth(token) {
+        return tokenController.isValidToken(token);
     }
 }
 

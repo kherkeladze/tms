@@ -23,8 +23,7 @@ authRoutes.post('/login', (req, res) => {
     let result = User.login(req.body);
     
     result.then(token => {
-        res.cookie('token', token);
-        res.json({status : "success"});
+        res.json({status : "success", token : token});
 
     })
     .catch(data => {
@@ -32,5 +31,6 @@ authRoutes.post('/login', (req, res) => {
     });
     
 });
+
 
 module.exports = authRoutes;
