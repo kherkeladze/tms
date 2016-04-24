@@ -6,7 +6,7 @@
 
 let config = require('./appConfig');
 let authRoutes = require('./routes/auth');
-let userController = require('./controllers/userController');
+let taskRoutes = require('./routes/task');
 let express = require('express');
 let mongoose = require('mongoose');
 let bodyParser = require('body-parser');
@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(express.static('public'));
 
 app.use('/auth', authRoutes);
-
+app.use('/api/task', taskRoutes);
 
 
 app.get('*', (req, res) => {

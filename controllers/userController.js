@@ -10,7 +10,7 @@ let helpers = require('../helpers');
 let messages = require('../lang/messages');
 let tokenController = require('../controllers/tokenController');
 
-class User {
+class UserController {
 
     constructor(userData) {
         this.userData = userData;
@@ -62,4 +62,4 @@ class User {
 }
 
 
-module.exports = User;
+module.exports = UserController;

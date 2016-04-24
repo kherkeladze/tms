@@ -23,7 +23,7 @@ authRoutes.post('/login', (req, res) => {
     let result = User.login(req.body);
     
     result.then(token => {
-        res.json({status : "success", token : token});
+        res.json({ status : "success", token : token, email : req.body.email });
 
     })
     .catch(data => {

@@ -10,7 +10,7 @@ let config = require('../appConfig');
 class TokenController {
 
     static createToken(email) {
-        return jwt.sign({ email : email }, config.JWT_SECRET, { expiresIn : 5000 });
+        return jwt.sign({ email : email }, config.JWT_SECRET, { expiresIn : "7 days" });
     }
 
     static isValidToken(token) {

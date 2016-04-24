@@ -11,12 +11,14 @@ let taskSchema = new Schema({
 
     title : { type : String, trim : true, required : true },
     description : { type : String, trim : true, required : true },
-    status : { type : Number, default : 0 },
-    assignments : { type : Array },
-    createdAt : { type : Date, required : true },
-    updatedAt : { type : Date, required : true },
+    status : { type : String, required : true },
+    roles : { type : Array, required : true },
+    startDate : { type : Date, required : true },
+    dueDate : { type : Date, required : true },
+    updatedAt : { type : Date },
     comments : { type : Array }
 
 });
+
 
 module.exports = mongoose.model('Task', taskSchema);

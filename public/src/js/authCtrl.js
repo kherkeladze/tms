@@ -19,6 +19,7 @@ app.controller('authCtrl', function ($scope, $rootScope, $location, $cookies, Au
 
                 if(response.status == 'success'){
                     $cookies.put('token', response.token);
+                    localStorage.setItem('email', response.email);
                 }
 
                 else {
