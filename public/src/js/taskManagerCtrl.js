@@ -2,7 +2,7 @@
  * Created by Aka on 4/24/16.
  */
 
-app.controller('taskManagerCtrl', function ($scope, TaskAddService, getUsersEmails) {
+app.controller('taskManagerCtrl', function ($scope, $route, TaskAddService, getUsersEmails) {
 
     var userEmail = localStorage.getItem('email');
 
@@ -27,8 +27,8 @@ app.controller('taskManagerCtrl', function ($scope, TaskAddService, getUsersEmai
 
         var result = TaskAddService('/api/task/create', this.taskModel);
 
-        result.then(function (response) {
-            console.log(response);
+        result.then(function () {
+            $route.reload();
         });
     };
 
