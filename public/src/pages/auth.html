@@ -8,6 +8,12 @@
             {{error}}
         </div>
 
+        <div class="alert alert-success" role="alert" ng-if="regSuccess">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Success:</span>
+            {{regSuccess}}
+        </div>
+
         <uib-tabset active="activeJustified" justified="true">
             <uib-tab index="0" heading="Login">
 

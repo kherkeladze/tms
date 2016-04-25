@@ -41,5 +41,15 @@ userSchema.methods.comparePassword = function(password) {
 
 };
 
+userSchema.statics.getUsersEmails = function () {
+
+    let user = this;
+    return new Promise((resolve, reject) => {
+        user.find({}).select('email -_id').exec((err, data) => {
+            if(err) reject(err);
+            resolve(data);
+        });
+    });
+};
 
 module.exports = mongoose.model('User', userSchema);

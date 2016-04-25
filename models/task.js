@@ -20,5 +20,16 @@ let taskSchema = new Schema({
 
 });
 
+taskSchema.statics.findUserTasks = function(email) {
+
+    let task = this;
+    return new Promise((resolve, reject) => {
+        task.find({}).where('roles.user').equals(email).exec((err, data) => {
+            if(err) reject(err);
+            resolve(data);
+        });
+    });
+
+};
 
 module.exports = mongoose.model('Task', taskSchema);

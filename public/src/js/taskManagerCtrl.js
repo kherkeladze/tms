@@ -2,14 +2,24 @@
  * Created by Aka on 4/24/16.
  */
 
-app.controller('taskManagerCtrl', function (TaskAddService) {
+app.controller('taskManagerCtrl', function ($scope, TaskAddService, getUsersEmails) {
 
     var userEmail = localStorage.getItem('email');
+
+    this.users = {};
+    var self = this;
+
+    getUsersEmails('/api/task/userEmails').then(function (result) {
+          self.users = _.map(result, 'email');
+          self.users.splice(self.users.indexOf(userEmail), 1);
+          $scope.$apply();
+    });
+
 
     this.taskModel = {
         status : "Not started",
         roles : [
-            { user : userEmail, role : "creator" }
+            { user : userEmail, role : "Creator" }
         ]
     };
 
@@ -27,7 +37,7 @@ app.controller('taskManagerCtrl', function (TaskAddService) {
         "values": [ "Not started", "In progress", "Testing", "Accepted", "Rejected", "Closed"]
     };
 
-
+    
     this.userBlocks = [];
 
     this.addUserBlock = function () {

@@ -27,7 +27,7 @@ class UserController {
                 if(err) resolve(response.error(helpers.mongoosePrettyErrors(err)));
 
                 resolve(response.success(newUser));
-                
+
             });
             
         });
@@ -37,7 +37,7 @@ class UserController {
     static login(credentials) {
 
         return new Promise((resolve, reject) => {
-
+            
             userModel.findOne({ email : credentials.email }, (err, user) => {
 
                 if(err) return resolve(response.error(err));
@@ -55,11 +55,6 @@ class UserController {
         });
 
     }
-
-    static checkAuth(token) {
-        return tokenController.isValidToken(token);
-    }
 }
-
 
 module.exports = UserController;

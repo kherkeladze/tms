@@ -9,7 +9,7 @@ gulp.task('indexFile', function() {
 
 gulp.task('pages', function() {
     gulp.src('./public/src/pages/*.html').
-    pipe(htmlMin()).pipe(gulp.dest('./public/generated/pages/'));
+    pipe(htmlMin({ collapseWhitespace: true })).pipe(gulp.dest('./public/generated/pages/'));
 });
 
 gulp.task('scripts', function() {

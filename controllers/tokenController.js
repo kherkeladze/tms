@@ -12,20 +12,11 @@ class TokenController {
     static createToken(email) {
         return jwt.sign({ email : email }, config.JWT_SECRET, { expiresIn : "7 days" });
     }
-
-    static isValidToken(token) {
-
-        try {
-            jwt.verify(token, config.JWT_SECRET);
-            return true;
-        }
-
-        catch(err) {
-            return false;
-        }
-
-    }
     
+
+    static getTokenItem(token, item){
+         return jwt.verify(token, config.JWT_SECRET)[item];
+    }
 }
 
 module.exports = TokenController;

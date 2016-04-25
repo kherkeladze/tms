@@ -2,14 +2,13 @@
  * Created by Aka on 4/23/16.
  */
 
-var app = angular.module('tms', ['ui.bootstrap','ngRoute', 'ngCookies']);
+var app = angular.module('tms', ['ui.bootstrap', 'ngRoute', 'ngCookies']);
 
 
 app.run(function ($cookies, $location) {
     if(!$cookies.get('token'))
         $location.path('/auth');
 });
-
 
 app.config(function($routeProvider, $locationProvider) {
 

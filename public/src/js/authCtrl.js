@@ -6,9 +6,10 @@ app.controller('authCtrl', function ($scope, $rootScope, $location, $cookies, Au
 
 
     $scope.errors = [];
+    $scope.regSuccess = false;
     this.loginData = {};
     this.registerData = {};
-
+    var self = this;
     this.tryLogin = function ($valid) {
 
 
@@ -20,6 +21,8 @@ app.controller('authCtrl', function ($scope, $rootScope, $location, $cookies, Au
                 if(response.status == 'success'){
                     $cookies.put('token', response.token);
                     localStorage.setItem('email', response.email);
+                    $location.path('/');
+                    $scope.$apply();
                 }
 
                 else {
@@ -31,12 +34,20 @@ app.controller('authCtrl', function ($scope, $rootScope, $location, $cookies, Au
     };
 
     this.tryRegister = function ($valid) {
+        $scope.regSuccess = false;
         if(!$valid) return false;
 
         AuthService('/auth/register', this.registerData)
             .then(function(response) {
-                $scope.errors = response.errors;
-                $scope.$apply();
+
+                if(response.status == 'success') {
+                    $scope.regSuccess = "Registration completed! Please log in";
+                    localStorage.setItem('email', self.registerData.email);
+                    $scope.$apply();
+                }
+
+                else
+                    $scope.errors = response.errors;
             });
 
     }
