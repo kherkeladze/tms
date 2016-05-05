@@ -43,20 +43,16 @@ userSchema.methods.comparePassword = function(password) {
 
 
 userSchema.statics.create = function(userData) {
+//todo refactor this
 
-    let newUser = this(userData);
-
-    return new Promise(resolve => {
-
-        newUser.save(err => {
-
-            if(err) resolve(err);
-
-            resolve(newUser);
-
+    let self = this;
+    return new Promise((resolve, reject) => {
+        self.create(userData, function (err, data) {
+            if(err) return reject(err);
+            resolve(data);
         });
-
-    });
+        
+    });  
 };
 
 userSchema.statics.find = function(credentials) {
@@ -65,13 +61,11 @@ userSchema.statics.find = function(credentials) {
 
         this.findOne({ email : credentials.email }, (err, user) => {
 
-            if(err) return resolve(err);
-
+            if(err) return reject(err);
             if(!user) return reject('no user');
 
             if(user.comparePassword(credentials.password))
-
-                resolve(credential.email);
+                resolve(credentials.email);
 
             else
                 reject('error wrong pass');
