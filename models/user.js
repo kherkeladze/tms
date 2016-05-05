@@ -41,6 +41,46 @@ userSchema.methods.comparePassword = function(password) {
 
 };
 
+
+userSchema.statics.create = function(userData) {
+
+    let newUser = this(userData);
+
+    return new Promise(resolve => {
+
+        newUser.save(err => {
+
+            if(err) resolve(err);
+
+            resolve(newUser);
+
+        });
+
+    });
+};
+
+userSchema.statics.find = function(credentials) {
+
+    return new Promise((resolve, reject) => {
+
+        this.findOne({ email : credentials.email }, (err, user) => {
+
+            if(err) return resolve(err);
+
+            if(!user) return reject('no user');
+
+            if(user.comparePassword(credentials.password))
+
+                resolve(credential.email);
+
+            else
+                reject('error wrong pass');
+        });
+
+    });
+
+};
+
 userSchema.statics.getUsersEmails = function () {
 
     let user = this;

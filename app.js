@@ -14,7 +14,7 @@ let cookieParser = require('cookie-parser');
 let path = require('path');
 
 let app = express();
-mongoose.connect(`mongodb://localhost/${config.DATABASE}`);
+mongoose.connect(config.DATABASE);
 mongoose.set('debug', true);
 
 app.use(bodyParser.urlencoded({ extended: false }));
