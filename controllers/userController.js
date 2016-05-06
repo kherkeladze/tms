@@ -16,7 +16,7 @@ class UserController {
 
     }
 
-    static login(credentials) {
+    login() {
 
     }
 }

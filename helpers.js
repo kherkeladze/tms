@@ -15,7 +15,6 @@ class Helper {
 
         if(err.name = "ValidationError") {
             _.forOwn(err.errors, error => {
-                console.log('eaah');
                 if(error.properties.type == 'required')
                     prettyErrors.push(`${error.properties.path} ${messages.REQUIRED_FIELD}`);
 

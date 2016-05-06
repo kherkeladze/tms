@@ -46,7 +46,7 @@ userSchema.statics.create = function(userData) {
 
     return new Promise((resolve, reject) => {
         self.save((err, data) => {
-            if(err) return reject(err);
+            if(err) reject(err);
             resolve(data);
         })
 
