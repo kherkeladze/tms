@@ -20,6 +20,29 @@ let taskSchema = new Schema({
 
 });
 
+
+taskSchema.statics.create = function (taskData) {
+
+    let task = new this(taskData);
+
+    return new Promise((resolve, reject) => {
+        task.save((err, data) => {
+            if(err) return reject(err);
+            resolve(data);
+        });
+    });
+
+};
+
+
+taskSchema.statics.update = function (task) {
+
+    this.update({ _id: task._id }, task, { multi: false }, function(err) {
+        if(err) { throw err; }
+    });
+
+};
+
 taskSchema.statics.findUserTasks = function(email) {
 
     let task = this;
@@ -28,6 +51,16 @@ taskSchema.statics.findUserTasks = function(email) {
             if(err) reject(err);
             resolve(data);
         });
+    });
+
+};
+
+
+taskSchema.statics.addComment = function (data) {
+
+    this.findById(data.taskId, (err, task) => {
+        task.comments.push({ author : data.author, comment : data.comment });
+        task.save();
     });
 
 };

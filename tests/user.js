@@ -24,9 +24,9 @@ let fakeUser = {
 
 describe('method outputs', function () {
 
-/*    it('create method output should be a promise', function () {
-        expect(userModel.create({})).to.be.a('promise');
-    });*/
+     it('create method output should be a promise', function () {
+         expect(userModel.create({})).to.be.a('promise');
+     });
 
     it('find method output should be a promise', function () {
         expect(userModel.find({})).to.be.a('promise');
