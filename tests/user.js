@@ -8,6 +8,10 @@ let chai = require('chai');
 let faker = require('faker');
 let expect = chai.expect;
 let userModel = require('../models/user');
+let mongoose = require('mongoose');
+let config = require('../appConfig');
+
+mongoose.connect(config.TEST_DATABASE);
 
 let fakeUser = {
 
@@ -20,9 +24,9 @@ let fakeUser = {
 
 describe('method outputs', function () {
 
-    it('create method output should be a promise', function () {
+/*    it('create method output should be a promise', function () {
         expect(userModel.create({})).to.be.a('promise');
-    });
+    });*/
 
     it('find method output should be a promise', function () {
         expect(userModel.find({})).to.be.a('promise');
@@ -42,8 +46,10 @@ describe('method output results', function () {
     });
 
     it('promise should be resolved with success', function () {
-        return userModel.create(fakeUser).then(function (data) {
-            expect(data).to.be.an('object');
+
+        return userModel.create(fakeUser).then(function(data) {
+           expect(data).to.be.an('object');
         });
+
     });
 });
