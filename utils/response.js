@@ -7,11 +7,11 @@
 class Response {
 
     static success(res, data) {
-        return res.status('200').json(data);
+        return res.status(200).json(data);
     }
 
     static error(res, data) {
-        return res.status('400').json(data);
+        return res.status(400).json(data);
     }
 
 }
