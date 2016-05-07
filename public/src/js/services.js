@@ -6,7 +6,7 @@ app.factory('AuthService', function($http) {
 
     return function (url, data) {
 
-        return new Promise(function (resolve) {
+        return new Promise(function (resolve, reject) {
 
             $http({
                 method : 'POST',
@@ -14,6 +14,9 @@ app.factory('AuthService', function($http) {
                 data : data
             }).then(function (response) {
                 resolve(response.data);
+
+            }).catch(function(response){
+              reject(response.data);
             });
 
         });
@@ -101,3 +104,9 @@ app.factory('getUsersEmails', function ($http) {
 });
 
 
+app.factory('getTaskById', function ($http) {
+
+    return function (taskId) {
+        return $http({ method : 'GET', url : 'api/task/findTask/' + taskId });
+    };
+});

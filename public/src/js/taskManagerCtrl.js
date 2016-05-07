@@ -7,6 +7,7 @@ app.controller('taskManagerCtrl', function ($scope, $route, TaskAddService, getU
     var userEmail = localStorage.getItem('email');
 
     this.users = {};
+    $scope.userRole = '';
     var self = this;
 
     getUsersEmails('/api/task/userEmails').then(function (result) {
@@ -37,7 +38,7 @@ app.controller('taskManagerCtrl', function ($scope, $route, TaskAddService, getU
         "values": [ "Not started", "In progress", "Testing", "Accepted", "Rejected", "Closed"]
     };
 
-    
+
     this.userBlocks = [];
 
     this.addUserBlock = function () {

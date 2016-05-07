@@ -6,30 +6,15 @@
 
 let express = require('express');
 let authRoutes = express.Router();
-let User = require('../controllers/userController');
+let user = require('../services/user');
+let response = require('../utils/response');
 
 authRoutes.post('/register', (req, res) => {
-
-    let user = new User(req.body);
-    let result = user.register();
-
-    result.then(data => res.json(data));
-
-
+    user.register(req.body).then(data => response.success(res, data), err => response.error(res, err));
 });
 
 authRoutes.post('/login', (req, res) => {
-    
-    let result = User.login(req.body);
-    
-    result.then(token => {
-        res.json({ status : "success", token : token, email : req.body.email });
-
-    })
-    .catch(data => {
-            res.json(data);
-    });
-    
+    user.login(req.body).then(token => response.success(res, token), err => response.error(res, err));
 });
 
 

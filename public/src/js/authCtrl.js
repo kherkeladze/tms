@@ -4,7 +4,6 @@
 
 app.controller('authCtrl', function ($scope, $rootScope, $location, $cookies, AuthService) {
 
-
     $scope.errors = [];
     $scope.regSuccess = false;
     this.loginData = {};
@@ -16,21 +15,21 @@ app.controller('authCtrl', function ($scope, $rootScope, $location, $cookies, Au
         if(!$valid) return false;
 
         AuthService('/auth/login', this.loginData)
-            .then(function (response) {
+            .then(
 
-                if(response.status == 'success'){
-                    $cookies.put('token', response.token);
-                    localStorage.setItem('email', response.email);
-                    $location.path('/');
-                    $scope.$apply();
-                }
+             function (token) {
+                 $cookies.put('token', token);
+                 localStorage.setItem('email', self.loginData.email);
+                 $location.path('/');
+                 $scope.$apply();
+            },
 
-                else {
-                    $scope.errors = response.errors;
-                    $scope.$apply();
-                }
-
-            });
+            function(err) {
+                $scope.errors = [];
+                $scope.errors.push(err);
+                $scope.$apply();
+            }
+        );
     };
 
     this.tryRegister = function ($valid) {
@@ -38,17 +37,18 @@ app.controller('authCtrl', function ($scope, $rootScope, $location, $cookies, Au
         if(!$valid) return false;
 
         AuthService('/auth/register', this.registerData)
-            .then(function(response) {
-
-                if(response.status == 'success') {
-                    $scope.regSuccess = "Registration completed! Please log in";
-                    localStorage.setItem('email', self.registerData.email);
-                    $scope.$apply();
-                }
-
-                else
-                    $scope.errors = response.errors;
-            });
+            .then(function() {
+                 $scope.errors = [];
+                 $scope.regSuccess = "Registration completed! Please log in";
+                localStorage.setItem('email', self.registerData.email);
+                $scope.$apply();
+            },
+            function(errors) {
+                $scope.errors = [];
+                $scope.errors = errors;
+                $scope.$apply();
+            }
+         );
 
     }
 

@@ -6,40 +6,36 @@
 
 let express = require('express');
 let taskRoutes = express.Router();
-let TaskController = require('../controllers/taskController');
-let TokenController = require('../controllers/tokenController');
+let task = require('../services/task');
+let user = require('../services/user');
+let response = require('../utils/response');
+
 
 taskRoutes.post('/create', (req, res) => {
-
-    let task = new TaskController(req.body);
-    let result = task.create();
-    result.then(data => res.json(data));
-
+    task.create(req.body).then(task => response.success(res, task), err => response.error(res, task));
 });
 
 taskRoutes.post('/all', (req, res) => {
-
-    let email = TokenController.getTokenItem(req.cookies.token,'email');
-    let result = TaskController.findTasks(email);
-    result.then(data => res.json(data));
-
+    task.getUserTasks(req.cookies.token).then(tasks => response.success(res, tasks), err => response.error(res, err));
 });
 
-taskRoutes.post('/userEmails', (req, res) => {
-    let result = TaskController.findEmails();
-    result.then(data => res.json(data));
+
+taskRoutes.get('/findTask/:taskId', (req, res) => {
+    task.findTaskById(req.params.taskId).then(task => response.success(res, task) , err => response.error(res, err));
 });
 
 
 taskRoutes.post('/addComment', (req, res) => {
-   TaskController.addComment(req.body);
-   res.json({status : "success"});
+    task.addComment(req.body); response.success(res, {});
 });
 
 
 taskRoutes.post('/update', (req, res) => {
-    TaskController.editTask(req.body);
-    res.json({status : "success"});
+    task.update(req.body); response.success(res, {});
+});
+
+taskRoutes.post('/userEmails', (req, res) => {
+    user.getEmails().then(emails => response.success(res, emails), err => response.error(res, err));
 });
 
 module.exports = taskRoutes;
