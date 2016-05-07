@@ -23,6 +23,7 @@ describe('user authentication routes', function () {
 
     });
 
+
     it('registration should complete successfully', function (done) {
 
         let demoUser = {
@@ -33,7 +34,7 @@ describe('user authentication routes', function () {
             password : 'demo'
         };
 
-        var options = {
+        let options = {
             url: 'http://localhost:8000/auth/register',
             headers: {
                 'Content-Type': 'application/json'
@@ -41,8 +42,47 @@ describe('user authentication routes', function () {
             json: demoUser
         };
 
-        request.post(options, function (err, res, body) {
-            console.log(res.statusCode, body);
+        request.post(options, function (err, res) {
+            expect(res.statusCode).equals(200);
+            done();
+        });
+
+    });
+
+
+    it('login should be done with error', function (done) {
+
+        let options = {
+            url: 'http://localhost:8000/auth/login',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            json: {email : 'wrongEmail', password : 'wrongEmail'}
+
+        };
+
+        request.post(options, function (err, res) {
+            expect(res.statusCode).equals(400);
+            done();
+        });
+
+    });
+
+
+    it('login should be success', function (done) {
+
+        let options = {
+            url: 'http://localhost:8000/auth/login',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            json: {email : fakeEmail, password : 'demo'}
+
+        };
+
+        request.post(options, function (err, res) {
+
+            expect(res.statusCode).equals(200);
             done();
         });
 

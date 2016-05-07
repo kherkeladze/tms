@@ -6,8 +6,6 @@
 
 let express = require('express');
 let taskRoutes = express.Router();
-let TaskController = require('../controllers/taskController');
-let TokenController = require('../controllers/tokenController');
 
 
 taskRoutes.post('/create', (req, res) => {

@@ -7,6 +7,7 @@
 let mongoose = require('mongoose');
 let bcrypt = require('bcrypt-nodejs');
 let Schema = mongoose.Schema;
+let messages = require('../lang/messages');
 
 let userSchema = new Schema({
 
@@ -60,13 +61,13 @@ userSchema.statics.find = function(credentials) {
         this.findOne({ email : credentials.email }, (err, user) => {
 
             if(err) return reject(err);
-            if(!user) return reject('no user');
+            if(!user) return reject(messages.USER_NOT_FOUND);
 
             if(user.comparePassword(credentials.password))
                 resolve(credentials.email);
 
             else
-                reject('error wrong pass');
+                reject(messages.WRONG_PASSWORD);
         });
 
     });

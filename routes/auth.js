@@ -14,7 +14,7 @@ authRoutes.post('/register', (req, res) => {
 });
 
 authRoutes.post('/login', (req, res) => {
-    user.register(req.body);
+    user.login(req.body).then(token => response.success(res, token), err => response.error(res, err));
 });
 
 
