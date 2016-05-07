@@ -21,13 +21,13 @@ let taskSchema = new Schema({
 });
 
 
-taskSchema.statics.create = function (taskData) {
+taskSchema.statics.addNew = function (taskData) {
 
     let task = new this(taskData);
 
     return new Promise((resolve, reject) => {
         task.save((err, data) => {
-            if(err) return reject(err);
+            if(err) reject(err);
             resolve(data);
         });
     });
@@ -43,7 +43,7 @@ taskSchema.statics.update = function (task) {
 
 };
 
-taskSchema.statics.findUserTasks = function(email) {
+taskSchema.statics.findTasks = function(email) {
 
     let task = this;
     return new Promise((resolve, reject) => {
