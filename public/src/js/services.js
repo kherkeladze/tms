@@ -104,3 +104,9 @@ app.factory('getUsersEmails', function ($http) {
 });
 
 
+app.factory('getTaskById', function ($http) {
+
+    return function (taskId) {
+        return $http({ method : 'GET', url : 'api/task/findTask/' + taskId });
+    };
+});

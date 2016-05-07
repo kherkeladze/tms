@@ -50,8 +50,7 @@
                             <td><span class="label label-primary">{{ task.status }}</span></td>
                             <td>{{ task.dueDate | date:dateFormat}}</td>
                             <td>
-                                <a ng-click="tasks.openModal($index)" class="btn btn-default" href=""><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
-                                <a ng-click="tasks.openEditModal($index)" class="btn btn-default" href=""><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                <a href="/task/{{task._id}}" class="btn btn-default" href=""><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                             </td>
                         </tr>
                         </tbody>
@@ -171,96 +170,3 @@
     </div>
 
 </div>
-
-
-<style>
-
-    .modal-body .comment-box, .desc-box {
-        height: 400px;
-        overflow-y: auto;
-    }
-</style>
-
-<script type="text/ng-template" id="myModalContent.html">
-
-    <div class="modal-header">
-        <h3 class="modal-title">{{task.title}}</h3>
-    </div>
-    <div class="modal-body">
-
-        <div class="row">
-            <div class="col-xs-8 comment-box">
-                <h3 ng-show="task.comments.length > 0" class="panel-title" style="margin-bottom: 20px">Comments:</h3>
-                <h3 ng-show="task.comments.length == 0" class="panel-title" style="margin-bottom: 20px">No comments</h3>
-
-                <div ng-repeat="comment in task.comments | reverse">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item ">
-                            <h4 class="list-group-item-heading">{{comment.author}}</h4>
-                            <p class="list-group-item-text">{{comment.comment}}</p>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="col-xs-4 desc-box">
-                <p class="badge">{{userRole}}</p>
-
-                <div class="panel panel-success"> <div class="panel-heading">
-                    <h3 class="panel-title">Description</h3>
-                </div>
-                    <div class="panel-body">{{task.description}}
-                    </div>
-                </div>
-
-
-                <div class="form-group" ng-show="canComment">
-                    <label>Write comment:</label>
-                    <textarea ng-model="comment" name="" cols="30" rows="5"></textarea>
-                    <a ng-click="addComment(task._id)" class="btn btn-success">Add</a>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</script>
-
-
-<script type="text/ng-template" id="modalEdit.html">
-
-
-    <div class="modal-body">
-
-        <div class="row">
-            <div class="col-xs-10 col-xs-push-1">
-                <form style="margin-top: 10px">
-                    <div class="form-group">
-                        <label>Title:</label>
-                        <input ng-model="task.title" type="text" class="form-control" placeholder="title">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Description:</label>
-                        <input ng-model="task.description" type="text" class="form-control" placeholder="description">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Status:</label>
-                        <select ng-model="task.status" ng-options="v for v in statusOptions.values" class="form-control">
-
-                        </select>
-                    </div>
-
-                    <button ng-click="updateTask()" class="btn btn-success">save</button>
-
-                </form>
-            </div>
-
-        </div>
-
-    </div>
-</script>

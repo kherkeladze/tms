@@ -15,14 +15,27 @@ class Task {
         });     
     }
     
-    getUserTasks(req) {
+    getUserTasks(userToken) {
 
-        let email = token.getItem(req.cookies.token,'email');
-
+        let email = token.getItem(userToken,'email');
         return new Promise((resolve, reject) => {
            taskModel.findTasks(email).then(tasks => resolve(tasks), err => reject(err));
         });
 
+    }
+
+    findTaskById(taskId) {
+        return new Promise((resolve, reject) => {
+            taskModel.findTask(taskId).then(task => resolve(task), err => reject(err));
+        });
+    }
+
+    update(task) {
+        return taskModel.updateTask(task);
+    }
+
+    addComment(data) {
+        return taskModel.addComment(data);
     }
 }
 

@@ -22,5 +22,17 @@ app.config(function($routeProvider, $locationProvider) {
         .when('/', {
            templateUrl: 'generated/pages/dashboard.html',
            controller: 'dashboardCtrl'
+        })
+        .when('/task/:taskId', {
+           templateUrl: 'generated/pages/task.html',
         });
+
+
+});
+
+app.filter('reverse', function() {
+    return function(items) {
+        if(!items) return;
+        return items.slice().reverse();
+    };
 });

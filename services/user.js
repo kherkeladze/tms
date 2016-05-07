@@ -18,9 +18,15 @@ class User {
 
     login(credentials) {
         return new Promise((resolve, reject) => {
-            userModel.find(credentials).then(email => resolve(token.create(email)), err => reject(err));
+            userModel.findUser(credentials).then(email => resolve(token.create(email)), err => reject(err));
         });
 
+    }
+
+    getEmails() {
+        return new Promise((resolve, reject) => {
+            userModel.getUsersEmails().then(emails => resolve(emails), err => reject(err));
+        });
     }
 
 }

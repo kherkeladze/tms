@@ -35,12 +35,25 @@ taskSchema.statics.addNew = function (taskData) {
 };
 
 
-taskSchema.statics.update = function (task) {
+taskSchema.statics.updateTask = function (task) {
 
     this.update({ _id: task._id }, task, { multi: false }, function(err) {
         if(err) { throw err; }
     });
 
+};
+
+
+taskSchema.statics.findTask = function (taskId) {
+
+    let task = this;
+    return new Promise((resolve, reject) => {
+
+        task.findOne({ '_id' : taskId }, function (err, task) {
+            if(err) reject(err);
+            resolve(task);
+        });
+    })
 };
 
 taskSchema.statics.findTasks = function(email) {

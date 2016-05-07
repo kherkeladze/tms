@@ -21,7 +21,6 @@ let userSchema = new Schema({
 userSchema.pre('save', function(next) {
 
     let user = this;
-
     if(!user.isModified('password')) return next();
 
     bcrypt.hash(user.password, null, null, (err, hash) => {
@@ -35,16 +34,13 @@ userSchema.pre('save', function(next) {
 
 
 userSchema.methods.comparePassword = function(password) {
-
     return bcrypt.compareSync(password, this.password);
-
 };
 
 
 userSchema.statics.create = function(userData) {
 
     let self = new this(userData);
-
     return new Promise((resolve, reject) => {
         self.save((err, data) => {
             if(err) reject(err);
@@ -54,7 +50,7 @@ userSchema.statics.create = function(userData) {
     });
 };
 
-userSchema.statics.find = function(credentials) {
+userSchema.statics.findUser = function(credentials) {
 
     return new Promise((resolve, reject) => {
 
@@ -76,10 +72,9 @@ userSchema.statics.find = function(credentials) {
 
 userSchema.statics.getUsersEmails = function () {
 
-    let user = this;
-
+    let self = this;
     return new Promise((resolve, reject) => {
-        user.find({}).select('email -_id').exec((err, data) => {
+        self.find({}).select('email -_id').exec((err, data) => {
             if(err) reject(err);
             resolve(data);
         });
